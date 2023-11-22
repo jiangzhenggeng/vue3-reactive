@@ -5,7 +5,6 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 import path from 'path'
 import pxToViewport from 'postcss-px-to-viewport'
 import viteCompression from 'vite-plugin-compression'
-import { getProxy, getEnvName, getEnvIp, getIPAdress } from './vite.config-proxy'
 
 // https://vitejs.dev/config/
 export default function ({ mode, command, ssrBuild }) {
@@ -84,10 +83,7 @@ export default function ({ mode, command, ssrBuild }) {
     envPrefix: ['VUE_APP_'],
     define: {
       __VERSION__: '"2.3.8"',
-      'process.env.NODE_ENV': JSON.stringify(mode),
-      'process.env.hostIp': JSON.stringify(getIPAdress()),
-      'process.env.envName': JSON.stringify(getEnvName()),
-      'process.env.envIp': JSON.stringify(getEnvIp())
+      'process.env.NODE_ENV': JSON.stringify(mode)
     }
   }
   if (isDev) {
@@ -101,7 +97,7 @@ export default function ({ mode, command, ssrBuild }) {
       hmr: {
         overlay: false
       },
-      proxy: getProxy() || {}
+      proxy: {}
     }
   } else if (isPro) {
     config.build = {
